@@ -7,11 +7,17 @@ class Variant(models.Model):
     description = models.TextField()
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
     sku = models.SlugField(max_length=255)
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 class ProductImage(models.Model):
@@ -24,6 +30,9 @@ class ProductVariant(models.Model):
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.variant_title
+
 
 class ProductVariantPrice(models.Model):
     product_variant_one = models.ForeignKey(ProductVariant, on_delete=models.CASCADE,
@@ -35,3 +44,6 @@ class ProductVariantPrice(models.Model):
     price = models.FloatField()
     stock = models.FloatField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.product.title} and price: {self.price}'
